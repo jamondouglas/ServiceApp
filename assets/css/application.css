@@ -1,0 +1,14 @@
+body{
+  padding-top: 60px; /* 60px to make the container make room for the navigation bar */
+}
+
+ .row~hr{
+margin: 10px 0;
+border:0;
+border-top:1px solid #eeeeee;
+border-bottom: 1px solid #ffffff;
+}
+
+.container {
+	margin-top:75px;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- A meta name declaration which disables zoom for mobile devices.-->
+    
+    <title>Service.ly</title>
+    <link href="./assets/css/bootstrap.css" rel="stylesheet">
+    <link href="./assets/css/application.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <span class="brand">Service Manager</span>
+        </div>
+      </div>
+    </div>
+    <div id="main-region" class="container">
+    </div>
+      <!-- TEMPLATES -->
+      <script type="text/template" id="search-panel">
+        <div class="row-fluid">
+          <div class="span4 offset4">
+            <div class="input-append">
+              <input class="input-xlarge" id="appendInputButton" type="text">
+              <button class="btn btn-default" type="button">Search</button>
+              </span>
+            </div>
+          </div>
+        </div><!--end of row-->
+        <hr>
+        </script>
+        <script type="text/template" id="contact-template">
+        <p><%= firstName%> | <%=lastName %> | <%= phoneNumber %></p>
+        </script>
+
+      <!-- TEMPLATES END-->
+      <script src="./assets/js/vendor/jquery.js"></script>
+      <script src="./assets/js/vendor/json2.js"></script>
+      <script src="./assets/js/vendor/underscore.js"></script>
+      <script src="./assets/js/vendor/backbone.js"></script>
+      <script src="./assets/js/vendor/backbone.localstorage.js"></script>
+      <script src="./assets/js/vendor/backbone.marionette.js"></script>
+      
+      <script type="text/javascript">
+      var ServiceManager = new Marionette.Application();
+
+      ServiceManager.addRegions({
+        mainRegion:"#main-region"
+      });
+
+      ServiceManager.Provider = Backbone.Model.extend({
+        defaults:{
+          firstName:"Please enter first name.",
+          lastName:"Please enter last name.",
+          phoneNumber:"Enter phone number",
+        }
+      });
+
+      ServiceManager.RequestorView = Marionette.ItemView.extend({
+        template:"#contact-template"
+      });
+
+      ServiceManager.StaticView =  Marionette.ItemView.extend({
+        template: "#search-panel"
+      });
+
+      ServiceManager.on("initialize:after",function(){
+        debugger;
+        var provider = new ServiceManager.Provider({
+        firstName:"Jamon",
+        lastName:"Douglas",
+        phoneNumber:"510-303-6130"
+        });
+
+        var contactView = new ServiceManager.RequestorView({
+          model:provider  
+        });
+        var staticView = new ServiceManager.StaticView();
+       ServiceManager.mainRegion.show(contactView);
+      });
+
+      ServiceManager.start();
+      </script>
+
+    </body>
+  </html>
