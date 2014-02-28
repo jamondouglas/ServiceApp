@@ -1,4 +1,64 @@
-ContactManager.module("Entities", function(Entities, ContactManager, Backbone, Marionette, $, _){
+ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, Marionette, $, _) {
+
+  Entities.Provider = Backbone.Model.extend({
+    defaults: {
+      firstName: "Please enter first name.",
+      lastName: "Please enter last name",
+      phoneNumber: "Please enter phone number",
+      email:"Please enter email address"
+    }
+  });
+
+  Entities.ProviderCollection = Backbone.Collection.extend({
+    model: Entities.Provider,
+    comparator: function(provider) {
+      return provider.get("firstName") + " " + provider.get("lastName");
+    }
+  });
+
+  var providers;
+
+  var initializeProviders = function() {
+    providers = new Entities.ProviderCollection([
+        {
+            firstName:"Bob",
+            lastName: "James",
+            phoneNumber: "1234567",
+            email:"bjames@hotmail.com",
+            imagePath:"./assets/images/james_bob.jpg"
+          },
+          {
+            firstName:"Norman",
+            lastName: "Connors",
+            phoneNumber: "1234568",
+            email:"nconnors@gmail.com",
+            imagePath:"./assets/images/connors3.jpg"
+          },
+          {
+            firstName:"Pharell",
+            lastName: "Williams",
+            phoneNumber: "1234569",
+            email:"skateboardP@aol.com",
+            imagePath:"./assets/images/Pharrell-Williams.jpg"
+          }
+    ]);
+  };
+  var API = {
+    getProviderEntities: function(){
+      if(providers === undefined){
+        initializeProviders();
+      }
+      return providers;
+    }
+  };
+  ServiceManager.reqres.setHandler("provider:entities",function(){
+    return API.getProviderEntities();
+  });
+
+});
+
+
+/*ContactManager.module("Entities", function(Entities, ContactManager, Backbone, Marionette, $, _){
   Entities.Contact = Backbone.Model.extend({
     urlRoot: "contacts"
   });
@@ -70,3 +130,4 @@ ContactManager.module("Entities", function(Entities, ContactManager, Backbone, M
     return API.getContactEntity(id);
   });
 });
+*/
