@@ -21,6 +21,7 @@ ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, M
   var initializeProviders = function() {
     providers = new Entities.ProviderCollection([
         {
+            id:1,
             firstName:"Bob",
             lastName: "James",
             phoneNumber: "1234567",
@@ -28,6 +29,7 @@ ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, M
             imagePath:"./assets/images/james_bob.jpg"
           },
           {
+            id:2,
             firstName:"Norman",
             lastName: "Connors",
             phoneNumber: "1234568",
@@ -35,6 +37,7 @@ ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, M
             imagePath:"./assets/images/connors3.jpg"
           },
           {
+            id:3,
             firstName:"Pharell",
             lastName: "Williams",
             phoneNumber: "1234569",

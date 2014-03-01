@@ -20,10 +20,10 @@ ServiceManager.on("initialize:after", function() {
   if(Backbone.history){
     Backbone.history.start();
 
-    if(Backbone.history.fragment === ""){
-      Backbone.history.navigate("providers");
-      ServiceManager.ProvidersApp.List.Controller.listProviders();
+    if(this.getCurrentRoute()===""){
+     ServiceManager.trigger("providers:list");
     }
+    
   }
 });
 

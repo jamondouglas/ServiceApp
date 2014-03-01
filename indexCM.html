@@ -49,7 +49,7 @@
     </script>
 
     <script type="text/template" id="missing-contact-view">
-      <div class="alert alert-error">This contact doesn't exist !</div>
+      <div class="alert alert-error">This contact doesnt exist !</div>
     </script>
 
     <script type="text/template" id="contact-view">
@@ -75,6 +75,21 @@
     <script src="./assets/js/apps/contacts/show/show_controller.js"></script>
 
     <script type="text/javascript">
+    ContactManager = new Marionette.Application();
+      ContactManager.on("initialize:after",function(){
+        var person = Backbone.Model.extend({
+          defaults:{
+            eye:"blue",
+            hair:"bald"
+          }
+        });
+
+        var jamon = new person({
+          eyes:"green",
+          hair:"afro"
+        });
+        console.log(jamon);
+      });
       ContactManager.start();
     </script>
   </body>

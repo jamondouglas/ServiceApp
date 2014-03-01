@@ -9,7 +9,8 @@ ServiceManager.module("ProvidersApp", function(ProvidersApp, ServiceManager, Bac
 		listProviders: function() {
 			ProvidersApp.List.Controller.listProviders();
 		},
-		showProvider: function(id) {
+
+		showProvider:function(id){
 			ProvidersApp.Show.Controller.showProvider(id);
 		}
 	};
@@ -19,9 +20,8 @@ ServiceManager.module("ProvidersApp", function(ProvidersApp, ServiceManager, Bac
 		API.listProviders();
 	});
 
-	ServiceManager.on("provider:show", function(id) {
-		debugger;
-		ServiceManager.navigate("providers/" + id);
+	ServiceManager.on("provider:show",function(id){
+		ServiceManager.navigate("providers/"+id);
 		API.showProvider(id);
 	});
 

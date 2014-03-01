@@ -13,9 +13,7 @@ ServiceManager.module("ProvidersApp.List", function(List, ServiceManager, Backbo
 			});
 
 			providersListView.on("itemview:provider:show",function(childView, model){
-				debugger;
-				ServiceManager.navigate("providers/"+model.get("id"));
-				ServiceManager.trigger("provider:show", model);
+				ServiceManager.trigger("provider:show", model.get("id"));
 			});
 			ServiceManager.mainRegion.show(providersListView);
 		}

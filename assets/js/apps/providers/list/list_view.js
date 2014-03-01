@@ -5,8 +5,9 @@ ServiceManager.module("ProvidersApp.List", function(List, ServicerManager, Backb
 
 		events: {
 			"click": "highlightName",
-			"click button.js-delete": "deleteClicked",
-			"click a.js-show" : "showClicked"
+			"click td button.js-delete": "deleteClicked",
+			"click td a.js-show" : "showClicked",
+			
 		},
 
 		highlightName: function(e) {
@@ -14,14 +15,15 @@ ServiceManager.module("ProvidersApp.List", function(List, ServicerManager, Backb
 			this.$el.toggleClass("info");
 		},
 		deleteClicked: function(e){
+			console.log("in delete");
 			e.stopPropagation();
-				this.trigger("provider:delete",this.model);
+			this.trigger("provider:delete",this.model);
 		},
 		showClicked:function(e){
 			e.preventDefault();
 			e.stopPropagation();
 			this.trigger("provider:show", this.model);
-		}
+		},
 		//No need to have this function present in ServiceManager App
 		/*remove:function(){
 			var self = this;
