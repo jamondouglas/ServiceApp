@@ -3,7 +3,14 @@ ServiceManager.module("ProvidersApp.Show", function(Show,ServiceManager,Backbone
 		template:"#provider-view-csss",
 
 		events:{
-		"click button.js-home": "homeClicked"
+		"click button.js-home": "homeClicked",
+		"click button.js-edit":"editClicked"
+
+	},
+
+	editClicked:function(e){
+		e.preventDefault();
+		this.trigger("provider:edit",this.model);
 	},
 
 	homeClicked:function(e){

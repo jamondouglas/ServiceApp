@@ -2,17 +2,22 @@ ServiceManager.module('ProvidersApp.Show', function(Show, ServiceManager, Backbo
 
 	Show.Controller = {
 		showProvider: function(id) {
-			var providers = ServiceManager.request("provider:entities");
-			var provider = providers.get(id);
-			var showProviderView;
-			if (provider === undefined) {
-				showProviderView = new Show.MissingProvider({});
-			} else {
-				showProviderView = new Show.Provider({
-					model: provider
-				});
-			}
-			ServiceManager.mainRegion.show(showProviderView);
+			var fetchingProvider = ServiceManager.request("provider:entity", id);
+			$.when(fetchingProvider).done(function(provider) {
+				var providerView;
+				if (provider !== undefined) {
+					providerView = new Show.Provider({
+						model: provider
+					});
+					providerView.on("provider:edit",function(provider){
+						ServiceManager.trigger("provider:edit",provider.get("id"));
+					});
+				} else {
+					providerView = new Show.MissingProvider();
+				}
+
+				ServiceManager.mainRegion.show(providerView);
+			});
 		}
 	};
 });

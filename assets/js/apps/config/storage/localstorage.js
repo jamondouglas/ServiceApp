@@ -1,4 +1,4 @@
-ContactManager.module("Entities", function(Entities, ContactManager, Backbone, Marionette, $, _){
+ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, Marionette, $, _){
   var findStorageKey = function(entity){
     // use a model's urlRoot value
     if(entity.urlRoot){

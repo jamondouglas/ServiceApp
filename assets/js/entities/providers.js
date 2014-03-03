@@ -1,6 +1,27 @@
 ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, Marionette, $, _) {
 
   Entities.Provider = Backbone.Model.extend({
+    urlRoot:"providers",
+
+    validate:function(attrs,options){
+      var errors = {};
+
+      if(!attrs.firstName){
+        errors.firstName="can't be blank";
+      }
+      if(! attrs.lastName){
+        errors.lastName = "can't be blank";
+      }else{
+        if(attrs.lastName.length <2){
+          errors.lastName="is too short";
+        }
+      }
+      //build case that phone number isn't in correct format https://github.com/thedersen/backbone.validation
+      if(! _.isEmpty(errors)){
+        return errors;
+      }
+    },
+
     defaults: {
       firstName: "Please enter first name.",
       lastName: "Please enter last name",
@@ -8,13 +29,17 @@ ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, M
       email:"Please enter email address"
     }
   });
+  Entities.configureStorage(Entities.Provider);
 
   Entities.ProviderCollection = Backbone.Collection.extend({
     model: Entities.Provider,
+    url:"providers",
     comparator: function(provider) {
       return provider.get("firstName") + " " + provider.get("lastName");
     }
   });
+
+  Entities.configureStorage(Entities.ProviderCollection);
 
   var providers;
 
@@ -45,17 +70,49 @@ ServiceManager.module("Entities", function(Entities, ServiceManager, Backbone, M
             imagePath:"./assets/images/Pharrell-Williams.jpg"
           }
     ]);
+     providers.forEach(function(provider){
+      provider.save();
+     });
+     return providers.models;
   };
   var API = {
     getProviderEntities: function(){
-      if(providers === undefined){
-        initializeProviders();
-      }
-      return providers;
+      var providers = new Entities.ProviderCollection();
+      var defer = $.Deferred();
+      providers.fetch({
+        success:function(data){
+          defer.resolve(data);
+        }
+      });
+      var promise = defer.promise();
+      $.when(promise).done(function(data){
+        if(providers.length === 0){
+          var models = initializeProviders();
+          providers.reset(models);
+        }
+      });
+      return promise;
+    },
+    getProviderEntity:function(providerId){
+      var provider = new Entities.Provider({id:providerId});
+      var defer = $.Deferred();
+      provider.fetch({
+        success:function(data){
+          defer.resolve(data);
+        },
+        error:function(data){
+          defer.resolve(undefined);
+        }
+      });
+      
+      return defer.promise();
     }
   };
   ServiceManager.reqres.setHandler("provider:entities",function(){
     return API.getProviderEntities();
+  });
+  ServiceManager.reqres.setHandler("provider:entity",function(id){
+    return API.getProviderEntity(id);
   });
 
 });

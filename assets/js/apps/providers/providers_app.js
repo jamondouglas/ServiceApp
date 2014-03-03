@@ -2,7 +2,8 @@ ServiceManager.module("ProvidersApp", function(ProvidersApp, ServiceManager, Bac
 	ProvidersApp.Router = Marionette.AppRouter.extend({
 		appRoutes: {
 			"providers": "listProviders",
-			"providers/:id": "showProvider"
+			"providers/:id": "showProvider",
+			"providers/:id/edit":"editProvider"
 		}
 	});
 	var API = {
@@ -12,6 +13,9 @@ ServiceManager.module("ProvidersApp", function(ProvidersApp, ServiceManager, Bac
 
 		showProvider:function(id){
 			ProvidersApp.Show.Controller.showProvider(id);
+		},
+		editProvider:function(id){
+			ProvidersApp.Edit.Controller.editProvider(id);
 		}
 	};
 
@@ -23,6 +27,11 @@ ServiceManager.module("ProvidersApp", function(ProvidersApp, ServiceManager, Bac
 	ServiceManager.on("provider:show",function(id){
 		ServiceManager.navigate("providers/"+id);
 		API.showProvider(id);
+	});
+
+	ServiceManager.on("provider:edit",function(id){
+		ServiceManager.navigate("providers/"+id+"/edit");
+		API.editProvider(id);
 	});
 
 	ServiceManager.addInitializer(function() {
