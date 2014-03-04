@@ -1,4 +1,27 @@
 ServiceManager.module("ProvidersApp.List", function(List, ServicerManager, Backbone, Marionette, $, _) {
+
+	List.Layout = Marionette.Layout.extend({
+		template:"#providers-search-layout",
+		regions:{
+			searchRegion:"#search-region",
+			providersRegion:"#providers-region"
+		}
+	});
+
+	List.Panel = Marionette.ItemView.extend({
+		template:"#providers-search-panel",
+
+		events:{
+			"click button.js-search":"searchClicked"
+		},
+		searchClicked:function(e){
+			e.preventDefault();
+			var criterion = this.$(".filterCriterion").val();
+			this.trigger("providers:filter",criterion);
+		}
+
+	});
+
 	List.Provider = Marionette.ItemView.extend({
 		tagName: "tr",
 		template: "#contact-list-item",

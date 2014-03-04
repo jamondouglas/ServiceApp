@@ -25,18 +25,6 @@
 
       </div>
       <!-- TEMPLATES -->
-      <script type="text/template" id="search-panel">
-        <div class="row-fluid">
-          <div class="span4 offset4">
-            <div class="input-append">
-              <input class="input-xlarge" id="appendInputButton" type="text">
-              <button class="btn btn-default" type="button">Search</button>
-              </span>
-            </div>
-          </div>
-        </div><!--end of row-->
-        <hr>
-        </script>
         <script type="text/template" id="contact-list-item">
         <td><%= firstName%></td> <td><%=lastName %> </td> 
         <td>
@@ -140,7 +128,6 @@
            </div>
             </div><!-- span8 -->
             </div><!-- row-fluid-spacer -->
-
 </script>
 
 <script type="text/template" id="missing-contact-view">
@@ -180,6 +167,22 @@
   <button class="btn js-submit">Save</button>
  </form>
  </script>
+ <script type="text/template" id="providers-search-layout">
+ <div id="search-region"></div>
+ <div id="providers-region"></div>
+ </script>
+ <script type="text/template" id="providers-search-panel">
+        <div class="row-fluid">
+          <div class="span3 offset3">
+            <div class="input-append">
+              <input class="input-xlarge filterCriterion" id="appendInputButton" type="text" value="I need a painter,landscaper, cleaning, home repair">
+              <button class="btn btn-primary js-search" type="button">Search</button>
+              </span>
+            </div>
+          </div>
+        </div><!--end of row-->
+        <hr>
+        </script>
 
       <!-- TEMPLATES END-->
       <!-- SCRIPTS -->
